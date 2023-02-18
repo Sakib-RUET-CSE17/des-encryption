@@ -11,13 +11,14 @@
     />
   </head>
   <body>
-    <h1>DES Encryption</h1>
     <div class="container">
+      <h1>DES Encryption</h1>
       <p>
-        <label style="width: 10em" for="key">Key</label>
-        <span class="example">(e.g. '0123456789ABCDEF')</span>
+        <label class="form-label" style="width: 10em" for="key">Key</label>
+        <span class="example form-text">(e.g. '0123456789ABCDEF')</span>
         <span class="error"></span><br />
         <input
+          class="form-control"
           id="key"
           name="key"
           size="48"
@@ -29,22 +30,49 @@
       <p>
         <label style="width: 10em" for="input">Input Data</label>
         <span class="error"></span> <br />
-        <textarea cols="48" id="plainText" name="plainText" rows="10">
+        <textarea
+          class="form-control"
+          cols="48"
+          id="plainText"
+          name="plainText"
+          rows="10"
+        >
 123456ABCD132536</textarea
         >
       </p>
       <input
+        class="btn btn-success"
         onclick="handleEncryptBtn()"
         type="submit"
         value="Encrypt"
         name="action"
       />
-      <p id="enryptionStep"></p>
+      <div
+        class="progress mt-2"
+        role="progressbar"
+        aria-label="Animated striped example"
+        aria-valuenow="75"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <div
+          id="progressBar"
+          class="progress-bar progress-bar-striped progress-bar-animated"
+          style=""
+        ></div>
+      </div>
+      <p class="" id="enryptionStep"></p>
 
       <p>
         <label style="width: 10em" for="output">Output Data</label>
         <span class="error"></span> <br />
-        <textarea cols="48" id="output" name="output" rows="10">
+        <textarea
+          class="form-control"
+          cols="48"
+          id="output"
+          name="output"
+          rows="10"
+        >
 C0B7A8D05F3A829C</textarea
         >
       </p>
@@ -134,13 +162,13 @@ C0B7A8D05F3A829C</textarea
 
       const shiftLeft = (number, shifts) => {
         let shifted = number;
-        shifted = shifted.split('');
+        shifted = shifted.split("");
         let n = number.length;
         for (let i = 0; i < n; i++) {
-            shifted[i] = number[(parseInt(i) + parseInt(shifts)) % n];
-            console.log((parseInt(i) + parseInt(shifts)) % n ,shifted);
+          shifted[i] = number[(parseInt(i) + parseInt(shifts)) % n];
+          console.log((parseInt(i) + parseInt(shifts)) % n, shifted);
         }
-        return shifted.join('');
+        return shifted.join("");
       };
 
       // 64 bit
@@ -338,9 +366,35 @@ C0B7A8D05F3A829C</textarea
         let cipherText = "";
         [cipherText, output] = encrypt(plainText, roundKeyinBinary, output);
         output += `CipherText: ${cipherText}\n`;
-        enryptionStep.innerText = output;
 
-        document.getElementById('output').value = cipherText;
+        setTimeout(
+          () => (document.getElementById("progressBar").style = "width: 25%"),
+          100
+        );
+        setTimeout(
+          () => (document.getElementById("progressBar").style = "width: 50%"),
+          200
+        );
+        setTimeout(
+          () => (document.getElementById("progressBar").style = "width: 75%"),
+          300
+        );
+        setTimeout(
+          () => (document.getElementById("progressBar").style = "width: 100%"),
+          500
+        );
+        setTimeout(
+          () =>
+            document
+              .getElementById("progressBar")
+              .classList.remove("progress-bar-animated"),
+          600
+        );
+        setTimeout(() => (enryptionStep.innerText = output), 700);
+        setTimeout(
+          () => (document.getElementById("output").value = cipherText),
+          800
+        );
       };
     </script>
   </body>
